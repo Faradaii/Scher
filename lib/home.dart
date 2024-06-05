@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/data.dart';
+import 'package:myapp/detail.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -111,9 +112,11 @@ class _HomeState extends State<Home> {
 
   Widget searchbar(BuildContext context){
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -121,17 +124,17 @@ class _HomeState extends State<Home> {
               color: Colors.white60,
               borderRadius: BorderRadius.all(Radius.circular(10))
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.min,
               children:  [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(Icons.search_rounded, size: 30, color: Colors.black26)
                 ),
                 SizedBox(
-                  width: 220,
-                  child: TextField(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: const TextField(
                     decoration: InputDecoration(
                       hintText:  'Cari Beasiswa',
                       border: UnderlineInputBorder(borderSide: BorderSide.none)
@@ -141,9 +144,7 @@ class _HomeState extends State<Home> {
               ]
             )
           ),
-          const SizedBox(
-            width: 10
-          ),
+          
           Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -171,7 +172,7 @@ class _HomeState extends State<Home> {
       scrollDirection: Axis.horizontal,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: 390,
+        height: 380,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: schList.length,
@@ -190,13 +191,32 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children:  [
-                    Container(
-                      height: 210,
-                      decoration: const BoxDecoration(color: Colors.black, borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                    Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Container(
+                        height: 210,
+                        decoration:  BoxDecoration(
+                          color: Colors.black, 
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                          image: DecorationImage(
+                            image: NetworkImage(imagePath),
+                            fit: BoxFit.cover
+                          )
+                        ),
+                      ),
+                      Container(
+                        width: 200,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color:Color.fromARGB(255, 246, 246, 252),
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20),
+                      ),)
+                      ),
+                      ]
+                      
                     ),
-                    child: Image.asset(imagePath, fit: BoxFit.cover)
-                    ),
-                    Container(padding: const EdgeInsets.fromLTRB(10,10,10,0),
+                    Container(padding: const EdgeInsets.fromLTRB(10,0,10,0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,7 +238,11 @@ class _HomeState extends State<Home> {
                     ),
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-                      child: Text(schList[index]['details']['description'], style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black87),),
+                      child: Text(schList[index]['details']['description'], 
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.justify,
+                        maxLines: 3,
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black87),),
                     ),
                     Container(padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                     child: Row(
@@ -231,13 +255,13 @@ class _HomeState extends State<Home> {
                             backgroundColor: Colors.lightBlue.shade400,
                             foregroundColor: Colors.black54,
                             textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6)
                             ),
                           ),
-                            onPressed: (){},
+                            onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(schIndex: index,)));},
                             child: const Text('Lihat Detail', style: TextStyle(color: Colors.white, letterSpacing:0.5))
                         ),
                         IconButton(onPressed: (){bookmarkIt(index);}, icon: Icon(
@@ -257,7 +281,66 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget latestFeeds(context){return AppBar();}
+  Widget latestFeeds(context){
+    return SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+          height: 80,
+          child: ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: feeds.length,
+            itemBuilder: (context, index)  {
+              final String imagePath =  feeds[index]['imageHref'];
+              return Container(
+                padding: const EdgeInsets.fromLTRB(15,10,15,15),
+                width: MediaQuery.of(context).size.width * 3/4,
+                decoration: BoxDecoration(color: Colors.white60),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 60,
+                          margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                          decoration:  BoxDecoration(
+                            color: Colors.black, 
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            image: DecorationImage(
+                              image: NetworkImage(imagePath),
+                              fit: BoxFit.cover
+                            )
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(feeds[index]['title']),
+                            Text(feeds[index]['desc'], style: TextStyle(overflow: TextOverflow.ellipsis,), maxLines: 2),
+                          ]
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(onPressed: (){}, child: Text('Detail'))
+                      ]
+                    )
+                  ]
+                ),
+              );
+            },
+          ),
+        )
+      );
+  }
+
   Widget appbar() {
     return AppBar(
       automaticallyImplyLeading: false,
