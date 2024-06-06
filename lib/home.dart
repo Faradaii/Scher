@@ -286,8 +286,8 @@ class _HomeState extends State<Home> {
         physics: NeverScrollableScrollPhysics(),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-          height: 80,
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          height: 160,
           child: ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             itemCount: feeds.length,
@@ -295,8 +295,9 @@ class _HomeState extends State<Home> {
               final String imagePath =  feeds[index]['imageHref'];
               return Container(
                 padding: const EdgeInsets.fromLTRB(15,10,15,15),
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                 width: MediaQuery.of(context).size.width * 3/4,
-                decoration: BoxDecoration(color: Colors.white60),
+                decoration: BoxDecoration(color: Colors.white60, borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -318,7 +319,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 2/4,
+                          width: MediaQuery.of(context).size.width * 2/4 - 30,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
