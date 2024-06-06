@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:myapp/data.dart';
 
 class Detail extends StatefulWidget {
-  const Detail({super.key, required this.schIndex});
+  const Detail({super.key, required this.schIndex, required this.isBookmarked});
   
   final int schIndex;
+  final bool isBookmarked;
 
   @override
   State<Detail> createState() => _DetailState();
@@ -12,7 +13,7 @@ class Detail extends StatefulWidget {
 
 class _DetailState extends State<Detail> {
 
-  bool isExpand = false;
+  bool isExpand = true;
   
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class _DetailState extends State<Detail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(schList[widget.schIndex]['schName'], style: TextStyle(fontWeight: FontWeight.w700, fontSize:24)),
-                    IconButton(icon: Icon(Icons.bookmark), onPressed: (){},)
+                    IconButton(icon: Icon(widget.isBookmarked ? Icons.bookmark : Icons.bookmark_border_outlined), onPressed: (){},)
                   ]
                 ),
               ),

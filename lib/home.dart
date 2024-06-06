@@ -261,7 +261,7 @@ class _HomeState extends State<Home> {
                               borderRadius: BorderRadius.circular(6)
                             ),
                           ),
-                            onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(schIndex: index,)));},
+                            onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(isBookmarked: bookmarkedScholarships.contains(schList[index]['schName']),schIndex: index,)));},
                             child: const Text('Lihat Detail', style: TextStyle(color: Colors.white, letterSpacing:0.5))
                         ),
                         IconButton(onPressed: (){bookmarkIt(index);}, icon: Icon(
@@ -317,19 +317,22 @@ class _HomeState extends State<Home> {
                             )
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(feeds[index]['title']),
-                            Text(feeds[index]['desc'], style: TextStyle(overflow: TextOverflow.ellipsis,), maxLines: 2),
-                          ]
+                        Container(
+                          width: MediaQuery.of(context).size.width * 2/4,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(feeds[index]['title'], style: TextStyle(fontWeight: FontWeight.w600)),
+                              Text(feeds[index]['desc'], style: TextStyle(overflow: TextOverflow.ellipsis,), maxLines: 2),
+                            ]
+                          ),
                         )
                       ],
                     ),
                     Row(
                       children: [
-                        ElevatedButton(onPressed: (){}, child: Text('Detail'))
+                        ElevatedButton(onPressed: (){}, child: Text('Detail'), style:ElevatedButton.styleFrom(elevation: 0, backgroundColor: Colors.transparent))
                       ]
                     )
                   ]
