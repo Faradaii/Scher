@@ -33,7 +33,6 @@ class _DetailState extends State<Detail> {
                         height: MediaQuery.of(context).size.height * 2/4,
                         decoration:  BoxDecoration(
                           color: Colors.black, 
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                           image: DecorationImage(
                             image: NetworkImage(schList[widget.schIndex]['details']['ímageHref']),
                             fit: BoxFit.cover
