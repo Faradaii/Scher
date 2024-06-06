@@ -287,7 +287,7 @@ class _HomeState extends State<Home> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          height: 160,
+          height: 180,
           child: ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             itemCount: feeds.length,
